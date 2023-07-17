@@ -1,13 +1,16 @@
-import chalk from 'chalk';
-//encadear métodos para colorir texto, cor de fundo e texto em negrito
-console.log(chalk.blue.bgWhite.bold('Alura'));
-//receber múltiplos argumentos
-console.log(chalk.blue('curso', 'de', 'Node.js'));
-//métodos aninhados
-console.log(chalk.red('vermelho', chalk.underline.bgBlue('azul')));
-// uso de template strings e placeholders
-console.log(`
-CPU: ${chalk.red('90%')}
-RAM: ${chalk.green('40%')}
-DISK: ${chalk.yellow('70%')}
-`);
+import fs from "fs";
+import chalk from "chalk";
+
+function trataErro(erro) {
+  throw new Error(chalk.red(erro.code, "Não foi possivel encontrar o arquivo"));
+}
+
+function pegaArquivo(caminho) {
+  const encoding = "utf-8";
+  fs.promises
+    .readFile(caminho, encoding)
+    .then((texto) => console.log(chalk.green(texto)))
+    .catch(trataErro);
+}
+
+pegaArquivo("./arquivos/text.md");
